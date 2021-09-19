@@ -45,7 +45,7 @@ class PostController extends Controller
         $newPost = new Post;
 
         $newPost->fill($data);
-        $newPost->slug = Str::slug($data['title']);
+        $newPost->slug = Str::slug($data['title'], '-');
 
         $newPost->save();
         
@@ -84,6 +84,31 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
+
+        if($data['title'] != $post->title){
+
+            $slug = Str::slug($data['title'], '-'); 
+
+            $slug_base = $slug;
+
+            $slug_presente = Post::where('slug', $slug)->first();
+
+            $i = 1; //contatore
+
+            while($slug_presente){
+
+                // aggiungiamo allo slug di prima il counter
+                $slug = $slug_base . '-' . $i;
+
+                //verifichiamo se lo slug esiste ancora
+                $slug_presente = Post::where('slug', $slug)->first();
+
+                //incrementiamo il counter
+                $i++;
+            }
+            
+            $data['slug'] = $slug;
+        }
 
         $post->update($data);
 
