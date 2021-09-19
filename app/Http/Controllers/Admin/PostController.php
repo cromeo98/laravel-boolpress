@@ -85,20 +85,23 @@ class PostController extends Controller
     {
         $data = $request->all();
 
+        //il titolo nuovo è diverso da quello vecchio?
         if($data['title'] != $post->title){
 
+            //se sì
+            //creiamo uno slug con il nuovo titolo
             $slug = Str::slug($data['title'], '-'); 
 
-            $slug_base = $slug;
-
+            //creo una variabile che restituirà true or false se c'è già uno slug uguale a quello appena creato
             $slug_presente = Post::where('slug', $slug)->first();
 
             $i = 1; //contatore
 
+            //finchè slug_presente è uguale a true
             while($slug_presente){
 
                 // aggiungiamo allo slug di prima il counter
-                $slug = $slug_base . '-' . $i;
+                $slug = $slug . '-' . $i;
 
                 //verifichiamo se lo slug esiste ancora
                 $slug_presente = Post::where('slug', $slug)->first();
@@ -107,6 +110,7 @@ class PostController extends Controller
                 $i++;
             }
             
+            //assegno al data slug il nuovo slug creato
             $data['slug'] = $slug;
         }
 
