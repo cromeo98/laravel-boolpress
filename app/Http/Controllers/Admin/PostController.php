@@ -45,7 +45,24 @@ class PostController extends Controller
         $newPost = new Post;
 
         $newPost->fill($data);
-        $newPost->slug = Str::slug($data['title'], '-');
+        $slug = Str::slug($data['title'], '-');
+
+        $slug_presente = Post::where('slug', $slug)->first();
+        
+        $i = 1;
+        
+        while($slug_presente){
+            // aggiungiamo allo slug di prima il counter
+            $slug = $slug . '-' . $i;
+
+            //verifichiamo se lo slug esiste ancora
+            $slug_presente = Post::where('slug', $slug)->first();
+
+            //incrementiamo il counter
+            $i++;
+        }
+
+        $newPost->slug = $slug;
 
         $newPost->save();
         
