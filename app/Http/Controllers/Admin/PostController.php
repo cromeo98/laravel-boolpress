@@ -114,6 +114,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //validazione dati
+        $request->validate([
+            'title' => 'required|max:100',
+            'content' => 'required'
+        ]);
+
         $data = $request->all();
 
         //il titolo nuovo è diverso da quello vecchio?
