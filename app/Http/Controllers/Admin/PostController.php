@@ -87,7 +87,7 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('admin.posts.index',)->with('update', 'Hai modificato il comic ' . $post->title);
+        return redirect()->route('admin.posts.index',)->with('update', 'Hai modificato il post ' . $post->title);
     }
 
     /**
@@ -96,8 +96,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('delete', 'Hai eliminato il post ' . $post->title);
     }
 }
