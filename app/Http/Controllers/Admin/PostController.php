@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts= Post::all();
+        $posts= Post::paginate(6);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -40,6 +40,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        //validazione dati
+        $request->validate([
+            'title' => 'required|max:100',
+            'content' => 'required'
+        ]);
+
+        
         $data = $request->all();
 
         $newPost = new Post;
