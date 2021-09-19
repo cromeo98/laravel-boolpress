@@ -17,9 +17,9 @@
                         <th scope="row">{{$post->id}}</th>
                         <td>{{$post->title}}</td>
                         <td>
-                            <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-outline-success">Show</a>
-                            <a href="" class="btn btn-outline-warning">Edit</a>
-                            <form action="" class="d-inline-block" method="post">
+                            <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-outline-success mx-1">Show</a>
+                            <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-outline-warning mx-1">Edit</a>
+                            <form action="" class="d-inline-block mx-1" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="delete" class="btn btn-outline-danger">

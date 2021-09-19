@@ -18,8 +18,7 @@
                     <button type="submit" class="btn btn-primary ">Submit</button>
                     <a href="{{route('admin.posts.index')}}" class="btn btn-warning">Torna indietro</a>
                 </div>
-              </form>
-
+            </form>
         </div>
     </div>
 @endsection
