@@ -45,13 +45,18 @@ class PostController extends Controller
         $newPost = new Post;
 
         $newPost->fill($data);
+
+        //creiamo uno slug con il nuovo titolo
         $slug = Str::slug($data['title'], '-');
 
+        //creo una variabile che restituirà true or false se c'è già uno slug uguale a quello appena creato
         $slug_presente = Post::where('slug', $slug)->first();
         
-        $i = 1;
-        
+        $i = 1;//counter
+
+        //finchè slug_presente è uguale a true
         while($slug_presente){
+
             // aggiungiamo allo slug di prima il counter
             $slug = $slug . '-' . $i;
 
@@ -62,6 +67,7 @@ class PostController extends Controller
             $i++;
         }
 
+        //assegno allo slug del nuovo post lo slug corretto
         $newPost->slug = $slug;
 
         $newPost->save();
